@@ -2,7 +2,7 @@
 
 This project is a modular, production-style **e-commerce backend** built using Spring Boot and Spring Cloud. It follows the **microservices architecture** to ensure scalability, maintainability, and clear separation of concerns.
 
-> ✅ Actively being developed | 📌 Microservices structure | 💼 Resume-friendly showcase
+> ✅ Actively being developed | 📌 Microservices structure
 
 ---
 
