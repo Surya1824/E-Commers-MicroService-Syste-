@@ -1,50 +1,66 @@
-# 🛒 E-Commerce Microservices System
+# 🛒 E-Commerce Backend - Microservices Architecture
 
-A full-fledged backend system for an e-commerce platform built using Java and Spring Boot with a clean microservices architecture. The project is designed to be scalable, modular, and ready for production deployment using modern tools and best practices.
+This project is a modular, production-style **e-commerce backend** built using Spring Boot and Spring Cloud. It follows the **microservices architecture** to ensure scalability, maintainability, and clear separation of concerns.
 
----
-
-## 📦 Tech Stack
-
-- **Java 17**, **Spring Boot**, **Spring Cloud**
-- **JWT Authentication (HS256)** with role-based access
-- **MySQL** for persistent storage
-- **Eureka** for service discovery
-- **Spring Cloud Gateway** for API routing
-- **RabbitMQ / Kafka** for asynchronous communication
-- **Lombok**, **ModelMapper**, **MapStruct** (optional)
-- **Docker** (optional), **ELK Stack**, **Swagger UI**
+> ✅ Actively being developed | 📌 Microservices structure | 💼 Resume-friendly showcase
 
 ---
 
-## 🧱 Microservices Overview
+## ⚙️ Tech Stack
 
-| Service                | Description |
-|------------------------|-------------|
-| `api-gateway`          | Centralized API entry point. Routes requests to internal services securely using JWT tokens. |
-| `service-discovery`    | Eureka Server to manage dynamic registration and discovery of microservices. |
-| `user-service`         | Handles customer & admin registration/login. Issues JWT tokens. Manages user roles and authentication. |
-| `product-catalog`      | Allows CRUD operations on products. Includes category/subcategory structure, pricing, discount logic, and filtering. |
-| `order-service`        | Manages customer orders. Supports placing, viewing, and canceling orders. Coordinates with inventory service. |
-| `inventory-service`    | Tracks product stock. Updates inventory when orders are placed/canceled. Can support locking/reservation mechanisms. |
-| `common-lib` (optional)| Shared models and utilities used across services to avoid duplication. |
-
----
-
-## 🔐 Authentication
-
-- Role-based JWT issued on login via `/auth/customer-login`
-- Token is passed in `Authorization` header for all secure endpoints.
-- Admin-only routes protected at gateway/service level.
+- **Language**: Java 17
+- **Frameworks**: Spring Boot, Spring Cloud (Gateway, Eureka)
+- **Authentication**: JWT (role-based)
+- **Databases**: PostgreSQL (one per microservice)
+- **Messaging Broker**: RabbitMQ (for asynchronous events)
+- **Build Tool**: Maven
+- **Utilities**: Lombok, ModelMapper
+- **Testing**: JUnit, Mockito (planned)
+- **CI/CD**: GitHub Actions (planned)
+- **Containers & Deployment**: Docker & Docker Compose (planned)
 
 ---
 
-## 🚀 Running the Project (Dev Setup)
+## 🧩 Microservices Overview
 
-> Prerequisite: Java 17+, MySQL, RabbitMQ (if used), Docker (optional)
+Each service is hosted in its own GitHub repository. Use the links below to explore their codebases:
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/ecommerce-microservices.git
-   cd ecommerce-microservices
-.
+| Service | Description |
+|--------|-------------|
+| [**API Gateway**](https://github.com/your-username/api-gateway) | Centralized entry point. Handles routing, filtering, and request forwarding. Secures routes using JWT validation. |
+| [**Service Discovery**](https://github.com/your-username/service-discovery) | Eureka server for registering and discovering all microservices dynamically. |
+| [**User Management Service**](https://github.com/your-username/user-service) | Handles customer/admin registration and login. Generates role-based JWTs. |
+| [**Product Catalog Service**](https://github.com/your-username/product-catalog-service) | Manages product details, categories, subcategories, discounts. Supports admin-level CRUD operations. |
+| [**Order Management Service**](https://github.com/your-username/order-service) | Manages order placement, history, and cancellations. Uses product snapshots and interacts with inventory. |
+| [**Inventory Service**](https://github.com/your-username/inventory-service) | Updates and tracks product stock. Consumes order events for stock adjustment. |
+| **Payment Service** _(coming soon)_ | Simulate or integrate payment processing. Trigger order updates upon success/failure. |
+| **Notification Service** _(coming soon)_ | Will send email or SMS alerts for orders and updates. |
+
+> 🗄️ Each service uses a **dedicated PostgreSQL database**.  
+> 🔁 Inter-service communication is **synchronous (REST)** and **asynchronous (RabbitMQ events)** where appropriate.
+
+---
+
+## 🔐 Authentication & Security
+
+- Role-based authentication (`CUSTOMER`, `ADMIN`) via **JWT tokens**
+- Auth tokens are validated at the **API Gateway** level
+- Public endpoints:  
+  - `POST /auth/customer-register`  
+  - `POST /auth/customer-login`  
+- Private endpoints: Protected using role-based access control
+
+---
+
+## 🧱 Project Architecture
+
+```text
+       [ Frontend (Angular) ]
+                |
+          [ API Gateway ]
+                |
+ ┌──────────────┼──────────────┐
+ ↓              ↓              ↓
+[User]      [Product]        [Order]
+   ↓              ↓              ↓
+[Inventory]   [Payment]    [Notification]
