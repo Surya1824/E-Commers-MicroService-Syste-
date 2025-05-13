@@ -7,7 +7,6 @@ This project is a modular, production-style **e-commerce backend** built using S
 ---
 
 ## ⚙️ Tech Stack
-a
 - **Language**: Java 17
 - **Frameworks**: Spring Boot, Spring Cloud (Gateway, Eureka)
 - **Authentication**: JWT (role-based)
